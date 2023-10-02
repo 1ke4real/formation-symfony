@@ -38,11 +38,7 @@ class ProductController extends AbstractController
             'category' => 'laptop',
         ]
     ];
-    public function __construct()
-    {
-        $products = $this->products;
-        return $products;
-    }
+
 
     #[Route('/product/{id}', name: 'app_product')]
     public function show(int $id): JsonResponse
