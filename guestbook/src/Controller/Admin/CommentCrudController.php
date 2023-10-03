@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 
@@ -34,11 +35,12 @@ class CommentCrudController extends AbstractCrudController
     }
     public function configureFields(string $pageName): iterable
     {
+        yield IdField::new('id')->hideOnForm();
         yield AssociationField::new('conference');
         yield TextField::new('author');
         yield EmailField::new('email');
         yield TextField::new('text')->hideOnIndex();
-        yield TextField::new('photoFilename')->onlyOnIndex();
+        yield TextField::new('photoFilename');
 
         $createdAt = DateTimeField::new('createdAt')->setFormTypeOptions([
             'html5' => true,

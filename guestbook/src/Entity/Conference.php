@@ -15,7 +15,7 @@ class Conference implements \Stringable
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 4)]
+    #[ORM\Column(length: 255)]
     private ?string $city = null;
 
     #[ORM\Column(length: 4)]
