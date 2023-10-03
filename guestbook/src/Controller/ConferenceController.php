@@ -23,12 +23,13 @@ class ConferenceController extends AbstractController
     }
 
     #[Route('/conference/{id}', name: 'show')]
-    public function show(Environment $twig, Conference $conference, CommentRepository $commentRepository, Request $request): Response
+    public function show(Environment $twig, Conference $conference, CommentRepository $commentRepository, Request $request, ConferenceRepository $conferenceRepository): Response
     {
         $offset = max(0, $request->query->getInt('offset', 0));
         $paginator = $commentRepository->getCommentPaginator($conference, $offset);
         return new Response($twig->render('conference/show.html.twig', [
             'conference' => $conference,
+            'conferences' => $conferenceRepository->findAll(),
             'comments' => $paginator,
             'previous' => $offset - CommentRepository::PAGINATOR_PER_PAGE,
             'next' => min(count($paginator), $offset + CommentRepository::PAGINATOR_PER_PAGE),
