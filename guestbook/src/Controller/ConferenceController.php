@@ -16,7 +16,7 @@ class ConferenceController extends AbstractController
        dump($request->query->get('name'));
         return new Response(<<<EOF
                     <html>
-                        <body><img src="/images/under-construction.gif" /></body>
+                        <body><a href="/admin">ADMIN</a><img src="/images/under-construction.gif" /></body>
                     </html>
                 EOF);
     }
