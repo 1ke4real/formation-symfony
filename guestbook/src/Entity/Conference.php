@@ -5,28 +5,24 @@ namespace App\Entity;
 use App\Repository\ConferenceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ConferenceRepository::class)]
-class Conference
+class Conference implements \Stringable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    #[ORM\Column(length: 4)]
+    private ?string $city = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $text = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $email = null;
+    #[ORM\Column(length: 4)]
+    private ?string $year = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?bool $isInternational = null;
 
     #[ORM\OneToMany(mappedBy: 'conference', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
@@ -35,56 +31,48 @@ class Conference
     {
         $this->comments = new ArrayCollection();
     }
+    public function __toString(): string
+    {
+        return $this->city . ' ' . $this->year;
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getCity(): ?string
     {
-        return $this->name;
+        return $this->city;
     }
 
-    public function setName(string $name): static
+    public function setCity(string $city): static
     {
-        $this->name = $name;
+        $this->city = $city;
 
         return $this;
     }
 
-    public function getText(): ?string
+    public function getYear(): ?string
     {
-        return $this->text;
+        return $this->year;
     }
 
-    public function setText(string $text): static
+    public function setYear(string $year): static
     {
-        $this->text = $text;
+        $this->year = $year;
 
         return $this;
     }
 
-    public function getEmail(): ?string
+    public function isIsInternational(): ?bool
     {
-        return $this->email;
+        return $this->isInternational;
     }
 
-    public function setEmail(string $email): static
+    public function setIsInternational(bool $isInternational): static
     {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
+        $this->isInternational = $isInternational;
 
         return $this;
     }

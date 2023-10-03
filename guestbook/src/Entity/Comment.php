@@ -7,7 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
-class Comment
+class Comment implements \Stringable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -30,9 +30,10 @@ class Comment
     #[ORM\JoinColumn(nullable: false)]
     private ?Conference $conference = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $photoFilename = null;
-
+    public function __toString(): string
+    {
+        return (string) $this->getEmail();
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -94,18 +95,6 @@ class Comment
     public function setConference(?Conference $conference): static
     {
         $this->conference = $conference;
-
-        return $this;
-    }
-
-    public function getPhotoFilename(): ?string
-    {
-        return $this->photoFilename;
-    }
-
-    public function setPhotoFilename(?string $photoFilename): static
-    {
-        $this->photoFilename = $photoFilename;
 
         return $this;
     }
