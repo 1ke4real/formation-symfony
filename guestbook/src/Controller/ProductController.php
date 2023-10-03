@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Environment;
 
 class ProductController extends AbstractController
 {
@@ -41,23 +43,29 @@ class ProductController extends AbstractController
 
 
     #[Route('/product/{id}', name: 'app_product')]
-    public function show(int $id): JsonResponse
+    public function show(int $id, Environment $twig): Response
     {
-        if ($id){
+        if ($id) {
             $product = array_filter($this->products, function ($product) use ($id) {
                 return $product['id'] === $id;
             });
         } else {
             $product = 'Product not found';
         }
-        dump($product);
-        return new JsonResponse(current($product));
+        return new Response(
+            $twig->render('product/show.html.twig', [
+                'product' => current($product),
+            ])
+        );
     }
+
     #[Route('/products', name: 'app_product_all')]
-    public function all(): JsonResponse
+    public function all(Environment $twig): Response
     {
-       $products = $this->products;
-        return new JsonResponse($products);
+        $products = $this->products;
+        return new Response($twig->render('product/index.html.twig', [
+            'products' => $products,
+        ]));
     }
 
 }
