@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
-class Category
+class Category implements \Stringable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -21,6 +21,10 @@ class Category
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class, orphanRemoval: true)]
     private Collection $products;
 
+    public  function __toString(): string
+    {
+        return $this->name;
+    }
     public function __construct()
     {
         $this->products = new ArrayCollection();
