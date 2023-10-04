@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\ProductEntityTrait;
+use App\Entity\Traits\CreatedAndUpdate;
 use App\Repository\ProductRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,7 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\HasLifecycleCallbacks]
 class Product implements \Stringable
 {
-    use ProductEntityTrait;
+    use CreatedAndUpdate;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -36,6 +37,7 @@ class Product implements \Stringable
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
+
 
     public function __toString(): string
     {
@@ -94,27 +96,5 @@ class Product implements \Stringable
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
-    {
-        return $this->updatedAt;
-    }
 
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
 }
