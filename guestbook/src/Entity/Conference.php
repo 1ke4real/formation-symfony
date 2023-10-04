@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\CreatedAndUpdate;
 use App\Repository\ConferenceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -11,6 +12,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[ORM\Entity(repositoryClass: ConferenceRepository::class)]
 class Conference implements \Stringable
 {
+    use CreatedAndUpdate;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -31,11 +33,8 @@ class Conference implements \Stringable
     #[ORM\Column(type:'string',length: 255, unique: true)]
     private ?string $slug = null;
 
-    #[ORM\Column]
+    #[ORM\Column ]
     private ?\DateTimeImmutable $createdAt = null;
-
-    #[ORM\Column]
-    private ?\DateTimeImmutable $updatedAt = null;
 
     public function __construct()
     {
@@ -134,27 +133,4 @@ class Conference implements \Stringable
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeImmutable
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
 }

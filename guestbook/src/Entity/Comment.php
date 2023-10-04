@@ -2,30 +2,35 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\CreatedAndUpdate;
 use App\Repository\CommentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class Comment implements \Stringable
 {
+    use CreatedAndUpdate;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $author = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank]
+
     private ?string $text = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Email]
     private ?string $email = null;
-
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
@@ -34,8 +39,11 @@ class Comment implements \Stringable
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photoFilename = null;
 
-    #[ORM\Column]
+    #[ORM\Column (nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
 
     public function __toString(): string
     {
@@ -82,23 +90,6 @@ class Comment implements \Stringable
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-    #[ORM\PrePersist]
-    public function setCreatedAtValue()
-    {
-        $this->createdAt = new \DateTimeImmutable();
-
-    }
     public function getConference(): ?Conference
     {
         return $this->conference;
@@ -123,15 +114,4 @@ class Comment implements \Stringable
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
 }

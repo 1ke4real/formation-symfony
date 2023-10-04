@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 
@@ -20,6 +21,7 @@ class CommentCrudController extends AbstractCrudController
     {
         return Comment::class;
     }
+
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
@@ -28,11 +30,13 @@ class CommentCrudController extends AbstractCrudController
             ->setSearchFields(['author', 'title', 'email'])
             ->setDefaultSort(['createdAt' => 'DESC']);
     }
+
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
             ->add(EntityFilter::new('conference'));
     }
+
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->hideOnForm();
@@ -41,12 +45,13 @@ class CommentCrudController extends AbstractCrudController
         yield EmailField::new('email');
         yield TextField::new('text')->hideOnIndex();
         yield TextField::new('photoFilename');
+        $createdAt = DateTimeField::new('createdAt')->hideOnForm();
+        yield DateTimeField::new('updateAt')->hideOnForm();
+        yield ImageField::new('photoFilename')
+            ->setBasePath('/uploads/photos')
+            ->setLabel('Photo')
+            ->onlyOnIndex();
 
-        $createdAt = DateTimeField::new('createdAt')->setFormTypeOptions([
-            'html5' => true,
-            'years' => range(date('Y'), date('Y') + 5),
-            'widget' => 'single_text',
-        ])->hideOnForm();
         if (Crud::PAGE_EDIT === $pageName) {
             yield $createdAt->setFormTypeOption('disabled', true);
         } else {

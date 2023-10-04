@@ -7,8 +7,8 @@
     {% if comments|length> 0 %}
         <div>There are {{ comments|length }} comments.</div>
         {% for comment in comments %}
-            {% if comment.photoFilename %}
-                <img src=\"{{ asset('images/' ~ comment.photoFilename) }}\" class=\"conference-photo\"/>
+            {% if comment.photofilename %}
+                <img src="{{ asset('uploads/photos/' ~ comment.photofilename) }}" />
             {% endif %}
             <h4>{{ comment.author }}</h4>
             <small>{{ comment.createdAt|format_datetime('medium', 'short') }}</small>
@@ -26,4 +26,6 @@
         <p>Il n'y a pas encore de commentaires pour cette conférence.</p>
     {% endif %}
 
+    <h2>Add your feedback</h2>
+  {{ form(comment_form) }}
 {% endblock %}
