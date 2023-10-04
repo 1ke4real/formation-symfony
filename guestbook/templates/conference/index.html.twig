@@ -8,6 +8,6 @@
     {% for conference in conferences %}
         <h4> City : {{ conference.city }}</h4>
         <h4> Year : {{ conference.year }}</h4>
-        <a href="{{ path('show', { id: conference.id }) }}">ICI</a>
+        <a href="{{ path('show', { slug: conference.slug }) }}">ICI</a>
     {% endfor %}
 {% endblock %}

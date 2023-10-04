@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Conference;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * @extends ServiceEntityRepository<Conference>
@@ -23,6 +24,7 @@ class ConferenceRepository extends ServiceEntityRepository
     {
         return $this->findBy([], ['year' => 'ASC', 'city' => 'ASC']);
     }
+
 //    /**
 //     * @return Conference[] Returns an array of Conference objects
 //     */
