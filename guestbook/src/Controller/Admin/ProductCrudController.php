@@ -7,6 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -41,6 +42,8 @@ class ProductCrudController extends AbstractCrudController
             yield TextField::new('name');
             yield TextEditorField::new('description');
             yield MoneyField::new('price')->setStoredAsCents()->setCurrency('EUR');
+            yield DateTimeField::new('createdAt')->hideOnForm();
+            yield DateTimeField::new('updatedAt')->hideOnForm();
 
     }
 
