@@ -24,7 +24,6 @@ class Comment implements \Stringable
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank]
-
     private ?string $text = null;
 
     #[ORM\Column(length: 255)]
@@ -39,16 +38,20 @@ class Comment implements \Stringable
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photoFilename = null;
 
-    #[ORM\Column (nullable: true)]
+    #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[ORM\Column(length: 255, options: ['default' => 'submitted'])]
+    private ?string $state = 'submitted';
+
     public function __toString(): string
     {
         return (string) $this->getEmail();
     }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -114,4 +117,15 @@ class Comment implements \Stringable
         return $this;
     }
 
+    public function getState(): ?string
+    {
+        return $this->state;
+    }
+
+    public function setState(string $state): static
+    {
+        $this->state = $state;
+
+        return $this;
+    }
 }

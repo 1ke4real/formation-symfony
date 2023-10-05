@@ -20,6 +20,7 @@ class ProductCrudController extends AbstractCrudController
     {
         return Product::class;
     }
+
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
@@ -28,23 +29,21 @@ class ProductCrudController extends AbstractCrudController
             ->setSearchFields(['name', 'description', 'price'])
             ->setDefaultSort(['name' => 'ASC']);
     }
+
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
             ->add(EntityFilter::new('category'));
     }
 
-
     public function configureFields(string $pageName): iterable
     {
-            yield IdField::new('id')->hideOnForm();
-            yield AssociationField::new('category');
-            yield TextField::new('name');
-            yield TextEditorField::new('description');
-            yield MoneyField::new('price')->setStoredAsCents()->setCurrency('EUR');
-            yield DateTimeField::new('createdAt')->hideOnForm();
-            yield DateTimeField::new('updatedAt')->hideOnForm();
-
+        yield IdField::new('id')->hideOnForm();
+        yield AssociationField::new('category');
+        yield TextField::new('name');
+        yield TextEditorField::new('description');
+        yield MoneyField::new('price')->setStoredAsCents()->setCurrency('EUR');
+        yield DateTimeField::new('createdAt')->hideOnForm();
+        yield DateTimeField::new('updatedAt')->hideOnForm();
     }
-
 }

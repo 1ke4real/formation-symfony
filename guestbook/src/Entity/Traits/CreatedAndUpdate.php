@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Entity\Traits;
+
 use Doctrine\ORM\Mapping as ORM;
-trait CreatedAndUpdate {
-    #[ORM\Column (nullable: true)]
+
+trait CreatedAndUpdate
+{
+    #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column]
@@ -17,6 +20,7 @@ trait CreatedAndUpdate {
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
         return $this;
     }
 
@@ -28,12 +32,15 @@ trait CreatedAndUpdate {
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
+
     #[ORM\PrePersist]
     public function setCreatedAtValue(): static
     {
         $this->createdAt = new \DateTimeImmutable();
+
         return $this;
     }
 
@@ -41,7 +48,7 @@ trait CreatedAndUpdate {
     public function setUpdatedAtValue(): static
     {
         $this->updatedAt = new \DateTimeImmutable();
+
         return $this;
     }
-
 }

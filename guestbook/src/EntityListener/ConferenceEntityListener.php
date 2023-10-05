@@ -1,11 +1,11 @@
 <?php
+
 namespace App\EntityListener;
 
 use App\Entity\Conference;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\String\Slugger\SluggerInterface;
-
 
 #[AsEntityListener(event: 'prePersist', entity: Conference::class)]
 #[AsEntityListener(event: 'preUpdate', entity: Conference::class)]

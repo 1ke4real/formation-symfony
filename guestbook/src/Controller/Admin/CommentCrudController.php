@@ -3,7 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Comment;
-use App\Entity\Conference;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -46,18 +45,16 @@ class CommentCrudController extends AbstractCrudController
         yield TextField::new('text')->hideOnIndex();
         yield TextField::new('photoFilename');
         $createdAt = DateTimeField::new('createdAt')->hideOnForm();
-        yield DateTimeField::new('updateAt')->hideOnForm();
         yield ImageField::new('photoFilename')
             ->setBasePath('/uploads/photos')
             ->setLabel('Photo')
             ->onlyOnIndex();
-
+        yield TextField::new('state');
         if (Crud::PAGE_EDIT === $pageName) {
             yield $createdAt->setFormTypeOption('disabled', true);
         } else {
             yield $createdAt;
         }
-
     }
     /*
     public function configureFields(string $pageName): iterable

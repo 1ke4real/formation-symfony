@@ -22,17 +22,20 @@ class SpamCheckerTest extends TestCase
         $this->expectExceptionMessage('Unable to check for spam: invalid (Invalid key).');
         $checker->getSpamScore(comment: $comment, context: []);
     }
+
     /**
      * @dataProvider provideComments
      */
-
-    public function testSpamScore(int $exeptedScore, ResponseInterface $response, Comment $comment, array $context){
+    public function testSpamScore(int $exeptedScore, ResponseInterface $response, Comment $comment, array $context)
+    {
         $client = new MockHttpClient([$response]);
         $checker = new SpamChecker($client, 'abcde');
         $score = $checker->getSpamScore($comment, $context);
         $this->assertSame($exeptedScore, $score);
     }
-    public static function provideComments():iterable {
+
+    public static function provideComments(): iterable
+    {
         $comment = (new Comment())->setCreatedAtValue();
 
         $response = new MockResponse('', ['response_headers' => ['x-akismet-pro-tip: discard']]);

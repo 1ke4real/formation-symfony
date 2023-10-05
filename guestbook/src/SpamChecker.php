@@ -35,11 +35,12 @@ class SpamChecker
         if ('discard' === ($headers['x-akismet-pro-tip'][0] ?? '')) {
             return 2;
         }
+        error_log($response->getContent());
         $content = $response->getContent();
         if (isset($headers['x-akismet-debug-help'][0])) {
             throw new \RuntimeException(sprintf('Unable to check for spam: %s (%s).', $content, $headers['x-akismet-debug-help'][0]));
         }
+
         return 'true' === $content ? 1 : 0;
     }
-
 }

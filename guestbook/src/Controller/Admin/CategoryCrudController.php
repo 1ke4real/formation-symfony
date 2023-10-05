@@ -24,6 +24,7 @@ class CategoryCrudController extends AbstractCrudController
             ->setSearchFields(['name', 'description'])
             ->setDefaultSort(['name' => 'ASC']);
     }
+
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->hideOnForm();

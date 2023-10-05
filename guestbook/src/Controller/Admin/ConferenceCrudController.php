@@ -3,16 +3,12 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Conference;
-use Doctrine\ORM\Mapping\Entity;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 
 class ConferenceCrudController extends AbstractCrudController
 {
@@ -29,6 +25,7 @@ class ConferenceCrudController extends AbstractCrudController
             ->setSearchFields(['city', 'year'])
             ->setDefaultSort(['year' => 'DESC']);
     }
+
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->hideOnForm();
@@ -36,9 +33,7 @@ class ConferenceCrudController extends AbstractCrudController
         yield TextField::new('year');
         yield DateTimeField::new('createdAt')->hideOnForm();
         yield DateTimeField::new('updateAt')->hideOnForm();
-
     }
-
 
     /*ublic function configureFields(string $pageName): iterable
     {
@@ -48,5 +43,4 @@ class ConferenceCrudController extends AbstractCrudController
             TextEditorField::new('description'),
         ];
     }*/
-
 }

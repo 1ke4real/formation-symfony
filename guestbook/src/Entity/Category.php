@@ -31,16 +31,16 @@ class Category implements \Stringable
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    public  function __toString(): string
+    public function __toString(): string
     {
         return $this->name;
     }
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
-
-
     }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -84,7 +84,7 @@ class Category implements \Stringable
                 $product->setCategory(null);
             }
         }
+
         return $this;
     }
-
 }

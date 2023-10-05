@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
@@ -38,9 +37,8 @@ class ProductController extends AbstractController
             'price' => 1299.99,
             'description' => 'Apple MacBook Pro 13" 256 Go SSD 8 Go RAM Intel Core i5 quadricœur à 1,4 GHz Argent',
             'category' => 'laptop',
-        ]
+        ],
     ];
-
 
     #[Route('/product/{id}', name: 'app_product')]
     public function show(int $id, Environment $twig): Response
@@ -52,6 +50,7 @@ class ProductController extends AbstractController
         } else {
             $product = 'Product not found';
         }
+
         return new Response(
             $twig->render('product/show.html.twig', [
                 'product' => current($product),
@@ -63,9 +62,9 @@ class ProductController extends AbstractController
     public function all(Environment $twig): Response
     {
         $products = $this->products;
+
         return new Response($twig->render('product/index.html.twig', [
             'products' => $products,
         ]));
     }
-
 }

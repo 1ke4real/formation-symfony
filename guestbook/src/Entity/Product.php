@@ -7,7 +7,6 @@ use App\Repository\ProductRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class Product implements \Stringable
@@ -32,17 +31,17 @@ class Product implements \Stringable
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
-    #[ORM\Column (nullable: true)]
+    #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-
     public function __toString(): string
     {
         return $this->name;
     }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -95,6 +94,4 @@ class Product implements \Stringable
 
         return $this;
     }
-
-
 }

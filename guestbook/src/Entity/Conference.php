@@ -30,7 +30,7 @@ class Conference implements \Stringable
     #[ORM\OneToMany(mappedBy: 'conference', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
 
-    #[ORM\Column(type:'string',length: 255, unique: true)]
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
     private ?string $slug = null;
 
     #[ORM\Column ]
@@ -40,9 +40,10 @@ class Conference implements \Stringable
     {
         $this->comments = new ArrayCollection();
     }
+
     public function __toString(): string
     {
-        return $this->city . ' ' . $this->year;
+        return $this->city.' '.$this->year;
     }
 
     public function getId(): ?int
@@ -50,11 +51,13 @@ class Conference implements \Stringable
         return $this->id;
     }
 
-    public function computeSlug(SluggerInterface $slugger){
+    public function computeSlug(SluggerInterface $slugger)
+    {
         if (!$this->slug || '-' === $this->slug) {
             $this->slug = (string) $slugger->slug((string) $this)->lower();
         }
     }
+
     public function getCity(): ?string
     {
         return $this->city;
@@ -132,5 +135,4 @@ class Conference implements \Stringable
 
         return $this;
     }
-
 }

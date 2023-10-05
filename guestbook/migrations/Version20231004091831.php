@@ -36,5 +36,4 @@ final class Version20231004091831 extends AbstractMigration
         $this->addSql('ALTER TABLE conference DROP updated_at');
         $this->addSql('ALTER TABLE comment DROP updated_at');
     }
-
 }
