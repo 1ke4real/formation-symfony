@@ -31,15 +31,17 @@ trait CreatedAndUpdate {
         return $this;
     }
     #[ORM\PrePersist]
-    public function setCreatedAtValue(): void
+    public function setCreatedAtValue(): static
     {
         $this->createdAt = new \DateTimeImmutable();
+        return $this;
     }
 
     #[ORM\PreUpdate]
-    public function setUpdatedAtValue(): void
+    public function setUpdatedAtValue(): static
     {
         $this->updatedAt = new \DateTimeImmutable();
+        return $this;
     }
 
 }

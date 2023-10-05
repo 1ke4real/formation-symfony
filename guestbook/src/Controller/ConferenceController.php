@@ -9,6 +9,7 @@ use App\Form\CommentFormType;
 use App\Repository\CommentRepository;
 use App\Repository\ConferenceRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\SpamChecker;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +33,7 @@ class ConferenceController extends AbstractController
 
     #[Route('/conference/{slug}', name: 'show')]
     public function show(Environment $twig, Conference $conference, CommentRepository $commentRepository,
-                         Request $request, #[Autowire('%photo_dir%')] string $photoDir): Response
+                         Request $request, #[Autowire('%photo_dir%')] string $photoDir, SpamChecker $spamChecker): Response
     {
         $comment = new Comment();
         $form = $this->createForm(CommentFormType::class, $comment);
@@ -47,6 +48,15 @@ class ConferenceController extends AbstractController
             }
 
             $this->entityManager->persist($comment);
+            $context = [
+                'user_ip' => $request->getClientIp(),
+                'user_agent' => $request->headers->get('user_agent'),
+                'referrer' => $request->headers->get('referrer'),
+                'permalink' => $request->getUri(),
+            ];
+            if (2 === $spamChecker->getSpamScore($comment, $context)) {
+                throw new \RuntimeException('Blatant spam, go away!');
+            }
             $this->entityManager->flush();
             return $this->redirectToRoute('show', ['slug' => $conference->getSlug()]);
         }
