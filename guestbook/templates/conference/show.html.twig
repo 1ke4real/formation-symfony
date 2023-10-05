@@ -3,7 +3,7 @@
 {% block title %} Conférences GuestBook - {{ conference }} {% endblock %}
 
 {% block body %}
-    <h1>{{ conference }} Conférences</h1>
+    <h2>{{ conference }} Conférences</h2>
     {% if comments|length> 0 %}
         <div>There are {{ comments|length }} comments.</div>
         {% for comment in comments %}
@@ -26,6 +26,6 @@
         <p>Il n'y a pas encore de commentaires pour cette conférence.</p>
     {% endif %}
 
-    <h2>Add your feedback</h2>
+    <h3>Add your feedback</h3>
   {{ form(comment_form) }}
 {% endblock %}
